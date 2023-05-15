@@ -15,13 +15,13 @@ exports.aboutPage = async (req, res) => {
     res.render('about', locals);
 };
 
-exports.quatre = async (req, res) => {
-	const locals = {
-		title : "404 - Note app",
-		description : "404"
-	}
-    res.render('404', locals);
-};
+// exports.quatre = async (req, res) => {
+// 	const locals = {
+// 		title : "404 - Note app",
+// 		description : "404"
+// 	}
+//     res.render('404', locals);
+// };
 
 // exports.dashboard = async (req, res) => {
 // 	const locals = {

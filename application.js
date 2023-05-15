@@ -2,9 +2,20 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv").config();
+const session = require("express-session");
+const passport = require("passport");
+const mongooStore = require("connect-mongo");
+const connectDB = require("./server/database/db");
 const expressLayouts = require("express-ejs-layouts");
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
+
+//connect to tatabase
+connectDB();
+
+/* initialze passport and use passport session */
+app.use(passport.initialize());
+app.use(passport.session());
 
 /* set static files */
 app.use(express.static("public"));
@@ -19,7 +30,10 @@ app.set('view engine', 'ejs');
 const port = 3000;
 
 /* set routes */
+app.use('/', require("./server/routes/authenticator"));
 app.use('/', require("./server/routes/index"));
+app.use('/', require("./server/routes/dashboard"));
+
 
 // app.use('/', (req, res) => {
 // 	const locals = {
