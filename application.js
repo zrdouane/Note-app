@@ -2,20 +2,23 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv").config();
-const session = require("express-session");
+// const session = require("express-session");
 const passport = require("passport");
 const mongooStore = require("connect-mongo");
 const connectDB = require("./server/database/db");
+// const connectDB = require("./server/database/db");
+
 const expressLayouts = require("express-ejs-layouts");
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 
-//connect to tatabase
-connectDB();
-
 /* initialze passport and use passport session */
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
+
+
+//connect to tatabase
+connectDB();
 
 /* set static files */
 app.use(express.static("public"));
