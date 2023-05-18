@@ -2,7 +2,7 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv").config();
-// const session = require("express-session");
+const session = require("express-session");
 const passport = require("passport");
 const mongooStore = require("connect-mongo");
 const connectDB = require("./server/database/db");
@@ -12,9 +12,19 @@ const expressLayouts = require("express-ejs-layouts");
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 
+/* set session */
+app.use(session({
+	secret : 'zakaria',
+	resave : false,
+	saveUninitialized : true,
+	store : mongooStore.create({
+		mongoUrl : process.env.MONGODB_URI
+	})
+}))
+
 /* initialze passport and use passport session */
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.session());
 
 
 //connect to tatabase
@@ -37,6 +47,9 @@ app.use('/', require("./server/routes/authenticator"));
 app.use('/', require("./server/routes/index"));
 app.use('/', require("./server/routes/dashboard"));
 
+app.get('*', function(req, res) {
+	res.status(404).render('404');
+  })
 
 // app.use('/', (req, res) => {
 // 	const locals = {
